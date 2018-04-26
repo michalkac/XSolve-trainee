@@ -1,5 +1,7 @@
 # TraineeXsolve
 
+Recruitment task for XSolve trainee.  Simple Table with pagination, sorting and filtering by all attributes using Angular and Bootstrap. 
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.4.
 
 ## Development server
