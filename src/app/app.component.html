@@ -1,20 +1,114 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="span12 pagination-centered col-10">
+    <h2 class="text-center">Emploees - xsolve trainee task</h2>
+    <table class="nowrap container center-block" width="75%" cellspacing="0">
+        <thead>
+            <tr>
+                <th style="width: 15%" (click)="setSort('id')">Id.
+                    <span class="glyphicon" 
+                        style="float:right" 
+                        [ngClass]="{'glyphicon-triangle-bottom':currentSortAttribute === '-id','glyphicon-triangle-top':currentSortAttribute === 'id'}"></span>
+                </th>
+                <th style="width: 10%" (click)="setSort('firstName')">First Name
+                    <span class="glyphicon" 
+                        style="float:right" 
+                        [ngClass]="{'glyphicon-triangle-bottom':currentSortAttribute === '-firstName','glyphicon-triangle-top':currentSortAttribute === 'firstName'}"></span>
+                </th>
+                <th style="width: 10%" (click)="setSort('lastName')">Last Name
+                    <span class="glyphicon" 
+                        style="float:right" 
+                        [ngClass]="{'glyphicon-triangle-bottom':currentSortAttribute === '-lastName','glyphicon-triangle-top':currentSortAttribute === 'lastName'}"></span>
+                </th>
+                <th style="width: 30%" (click)="setSort('sortableDate')">Date of Birth
+                    <span class="glyphicon"
+                        style="float:right"  
+                        [ngClass]="{'glyphicon-triangle-bottom':currentSortAttribute === '-sortableDate','glyphicon-triangle-top':currentSortAttribute === 'sortableDate'}"></span>
+                </th>
+                <th style="width: 10%" (click)="setSort('company')">Company
+                    <span class="glyphicon"
+                        style="float:right" 
+                        [ngClass]="{'glyphicon-triangle-bottom':currentSortAttribute === '-company','glyphicon-triangle-top':currentSortAttribute === 'company'}"></span>
+                </th>
+                <th style="width: 20%" (click)="setSort('note')">Note
+                    <span class="glyphicon"
+                        style="float:right" 
+                        [ngClass]="{'glyphicon-triangle-bottom':currentSortAttribute === '-note','glyphicon-triangle-top':currentSortAttribute === 'note'}"></span>
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                <input class="col-xs-6 text-center" 
+                    id="idFilterMinInput" 
+                    placeholder="from">
+                <input class="col-xs-6 text-center " 
+                    id="idFilterMaxInput" 
+                    placeholder="to">
+            </td>
+            <td>
+                <input class="col-xs-12 text-center" 
+                    id="firstNameFilterInput">
+            </td>
+            <td>
+                <input class="col-xs-12 text-center" 
+                    id="lastNameFilterInput">
+            </td>
+            <td>
+                <input class="col-xs-6 text-center" 
+                    id="dateFilterMinInput" 
+                    [owlDateTimeTrigger]="dateF" 
+                    [owlDateTime]="dateF" 
+                    [(ngModel)]="selectedMoments"
+                    [selectMode]="'rangeFrom'" 
+                    placeholder="from">
+                <owl-date-time #dateF></owl-date-time>
+                <input class="col-xs-6 text-center" 
+                    id="dateFilterMaxInput" 
+                    [owlDateTimeTrigger]="dateT" 
+                    [owlDateTime]="dateT" 
+                    [(ngModel)]="selectedMoments"
+                    [selectMode]="'rangeTo'" 
+                    placeholder="to">
+                <owl-date-time #dateT></owl-date-time>
+            </td>
+            <td>
+                <input class="col-xs-12 text-center" 
+                    id="companyFilterInput">
+            </td>
+            <td>
+                <input class=" col-xs-4 text-center" 
+                    id="noteFilterMinInput" 
+                    placeholder="from">
+                <input class="col-xs-4 text-center" 
+                    id="noteFilterMaxInput" 
+                    placeholder="to">
+                <div class="col-xs-4">
+                    <button class="btn btn-primary btn-sm" 
+                        (click)="this.readInputs(); displayedWorkers = filterService(workers); setPage(1);">Search</button>
+                </div>
+            </td>
 
+        </tr>
+        <tr *ngFor="let item of page">
+            <td>{{ item.id }}</td>
+            <td>{{ item.firstName }}</td>
+            <td>{{ item.lastName }}</td>
+            <td>{{ item.dateOfBirth }}</td>
+            <td>{{ item.company }}</td>
+            <td>{{ item.note }}</td>
+        </tr>
+        <tr *ngIf="displayedWorkers != null && displayedWorkers.length == 0">
+            <td>There are no results that match your search!</td>
+        </tr>
+    </table>
+    <div class="container">
+        <tr *ngIf="pagination.pages && pagination.pages.length" class="pagination">
+            <th *ngFor="let page of pagination.pages" 
+                [ngClass]="{active:pagination.currentPage === page}" 
+                style="cursor: pointer" 
+                (click)="setPage(page);">
+                <a style="cursor: pointer">{{page}}</a>
+            </th>
+        </tr>
+    </div>
+
+</div>
