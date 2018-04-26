@@ -21,16 +21,10 @@ export class AppComponent implements OnInit {
 
   pagination: any = {};
   page: any[];
+
   currentSortAttribute: string;
-  idFilterMaxValue: any;
-  idFilterMinValue: any;
-  firstNameFilter: any;
-  lastNameFilter: any;
-  dateFilterMinValue: any;
-  dateFilterMaxValue: any;  
-  companyFilter: any;
-  noteFilterMinValue: any;
-  noteFilterMaxValue: any;
+
+  private filterValues: any = {}; 
 
 
   ngOnInit() {
@@ -94,7 +88,7 @@ export class AppComponent implements OnInit {
   }
 
   addSortableDate(array: any, source: any, destination){
-    //Adds simple YYYYMMDDHHMM date format that is easy to sort and filter by range.
+    //Adds simple YYYYMMDDHHMM date format that is easy to sort and filter by range
     for (var item in array){
     array[item][destination] = array[item][source].slice(6,10)
                               + array[item][source].slice(3,5) 
@@ -107,62 +101,54 @@ export class AppComponent implements OnInit {
 
 
   filterService(array: any,):any{
-
-    let idFilterMinValue =this.idFilterMinValue;
-    let idFilterMaxValue =this.idFilterMaxValue;
-    let firstNameFilter = this.firstNameFilter;
-    let lastNameFilter = this.lastNameFilter;
-    let dateFilterMinValue = this.dateFilterMinValue;
-    let dateFilterMaxValue = this.dateFilterMaxValue;
-    let companyFilter = this.companyFilter;
-    let noteFilterMinValue = this.noteFilterMinValue;
-    let noteFilterMaxValue = this.noteFilterMaxValue;
     
-    if (idFilterMinValue !== ''){
-    array=array.filter(function(element){return (element.id >= idFilterMinValue)});
+    let filterValues = this.filterValues;
+    
+    if (filterValues.idMin !== ''){
+    array=array.filter(function(element){return (element.id >= filterValues.idMin)});
     }
-    if (idFilterMaxValue !== ''){
-      array=array.filter(function(element){return (element.id <= idFilterMaxValue)});
+    if (filterValues.idMax !== ''){
+      array=array.filter(function(element){return (element.id <= filterValues.idMax)});
       }
-    if (firstNameFilter !== ''){
-      array=array.filter(function(element){return (element.firstName.toLowerCase().includes(firstNameFilter.toLowerCase()))});
+    if (filterValues.firstName !== ''){
+      array=array.filter(function(element){return (element.firstName.toLowerCase().includes(filterValues.firstName.toLowerCase()))});
     }
-    if (lastNameFilter !== ''){
-      array=array.filter(function(element){return (element.lastName.toLowerCase().includes(lastNameFilter.toLowerCase()))});
+    if (filterValues.lastName !== ''){
+      array=array.filter(function(element){return (element.lastName.toLowerCase().includes(filterValues.lastName.toLowerCase()))});
     }
-    if (dateFilterMinValue !== ''){
-      dateFilterMinValue = this.unifyDatepickerDate(dateFilterMinValue);
-      array=array.filter(function(element){return (element.sortableDate >= dateFilterMinValue)});
+    if (filterValues.dateMin !== ''){
+      filterValues.dateMin = this.unifyDatepickerDate(filterValues.dateMin);
+      array=array.filter(function(element){return (element.sortableDate >= filterValues.dateMin)});
     }
-    if (dateFilterMaxValue !== ''){
-      dateFilterMaxValue = this.unifyDatepickerDate(this.dateFilterMaxValue);
-      array=array.filter(function(element){return (element.sortableDate <= dateFilterMaxValue)});
+    if (filterValues.dateMax !== ''){
+      filterValues.dateMax = this.unifyDatepickerDate(this.filterValues.dateMax);
+      array=array.filter(function(element){return (element.sortableDate <= filterValues.dateMax)});
     }
-    if (companyFilter !== ''){
-      array=array.filter(function(element){return (element.company.toLowerCase().includes(companyFilter.toLowerCase()))});
-    }
-
-    if (noteFilterMinValue !== ''){
-      array=array.filter(function(element){return (element.note >= noteFilterMinValue)});
+    if (filterValues.company !== ''){
+      array=array.filter(function(element){return (element.company.toLowerCase().includes(filterValues.company.toLowerCase()))});
     }
 
-    if (noteFilterMaxValue !== ''){
-      array=array.filter(function(element){return (element.note <= noteFilterMaxValue)});
+    if (filterValues.noteMin !== ''){
+      array=array.filter(function(element){return (element.note >= filterValues.noteMin)});
+    }
+
+    if (filterValues.noteMax !== ''){
+      array=array.filter(function(element){return (element.note <= filterValues.noteMax)});
     }
     return array; 
   }
 
   readInputs(){
 //reads filtering input fields value
-      this.idFilterMinValue = (<HTMLInputElement>document.getElementById('idFilterMinInput')).value;
-      this.idFilterMaxValue = (<HTMLInputElement>document.getElementById('idFilterMaxInput')).value;
-      this.firstNameFilter = (<HTMLInputElement>document.getElementById('firstNameFilterInput')).value;
-      this.lastNameFilter = (<HTMLInputElement>document.getElementById('lastNameFilterInput')).value;
-      this.dateFilterMinValue = (<HTMLInputElement>document.getElementById('dateFilterMinInput')).value;
-      this.dateFilterMaxValue = (<HTMLInputElement>document.getElementById('dateFilterMaxInput')).value;
-      this.companyFilter = (<HTMLInputElement>document.getElementById('companyFilterInput')).value;
-      this.noteFilterMinValue = (<HTMLInputElement>document.getElementById('noteFilterMinInput')).value;
-      this.noteFilterMaxValue = (<HTMLInputElement>document.getElementById('noteFilterMaxInput')).value;
+      this.filterValues.idMin = (<HTMLInputElement>document.getElementById('idFilterMinInput')).value;
+      this.filterValues.idMax = (<HTMLInputElement>document.getElementById('idFilterMaxInput')).value;
+      this.filterValues.firstName = (<HTMLInputElement>document.getElementById('firstNameFilterInput')).value;
+      this.filterValues.lastName = (<HTMLInputElement>document.getElementById('lastNameFilterInput')).value;
+      this.filterValues.dateMin = (<HTMLInputElement>document.getElementById('dateFilterMinInput')).value;
+      this.filterValues.dateMax = (<HTMLInputElement>document.getElementById('dateFilterMaxInput')).value;
+      this.filterValues.company = (<HTMLInputElement>document.getElementById('companyFilterInput')).value;
+      this.filterValues.noteMin = (<HTMLInputElement>document.getElementById('noteFilterMinInput')).value;
+      this.filterValues.noteMax = (<HTMLInputElement>document.getElementById('noteFilterMaxInput')).value;
 
 
   }
