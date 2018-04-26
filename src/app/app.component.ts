@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
 
   setSort(newSortAttribute: string) {
     if (this.currentSortAttribute == newSortAttribute) {
-      //reverses sorting and saves sort direction by adding "-"
+//reverses sorting and saves sort direction by adding "-"
       this.workers = this.sortBy.transform(this.workers, newSortAttribute, true );
       this.currentSortAttribute = '-' + newSortAttribute; 
     }
@@ -68,7 +68,7 @@ export class AppComponent implements OnInit {
   }
 
   unifyDateFormat(array: any, field: any){
-  //adds missing 0's to birthDate
+//adds missing 0's to birthDate
     for (var item in array){
       if (array[item][field].slice(1, 2) == '.'){ 
         array[item][field] = '0'+array[item][field]
@@ -88,7 +88,7 @@ export class AppComponent implements OnInit {
   }
 
   addSortableDate(array: any, source: any, destination){
-    //Adds simple YYYYMMDDHHMM date format that is easy to sort and filter by range
+//Adds simple YYYYMMDDHHMM date format that is easy to sort and filter by range
     for (var item in array){
     array[item][destination] = array[item][source].slice(6,10)
                               + array[item][source].slice(3,5) 
